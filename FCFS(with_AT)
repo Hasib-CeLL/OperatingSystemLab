@@ -1,0 +1,94 @@
+#include <stdio.h>
+#define size 3
+int CT[size];
+int TAT[size];
+int WT[size];
+void completion_time(int AT[],int BT[])
+ {
+     int count = AT[0] ;
+     for(int i = 0 ; i<size ; i++)
+     {
+         if(count < AT[i])
+         {
+             count = AT[i] ;
+         }
+         count = count + BT[i] ;
+         CT[i] = count ;
+     }
+     printf("Completion Time: ");
+     for (int i = 0; i < size; i++)
+     {
+        printf("%d ", CT[i]);
+     }
+    printf("\n");
+ }
+ void turn_around_time(int AT[])
+  {
+      for (int i = 0; i < size; i++)
+     {
+        TAT[i] = CT[i] - AT[i];
+     }
+    printf("Turnaround Time: ");
+    for (int i = 0; i < size; i++)
+    {
+         printf("%d ", TAT[i]);
+    }
+     printf("\n");
+  }
+void waiting_time(int BT[])
+  {
+      for (int i = 0; i < size; i++)
+     {
+        WT[i] = TAT[i] - BT[i];
+     }
+    printf("Waiting Time: ");
+    for (int i = 0; i < size; i++)
+    {
+         printf("%d ", WT[i]);
+    }
+     printf("\n");
+  }
+void average_time()
+ {
+     float TotalTAT = 0 , TotalWT = 0 ;
+     float ATAT , AWT ;
+     for (int i = 0; i < size; i++)
+     {
+         TotalTAT = TotalTAT + TAT[i] ;
+         TotalWT = TotalWT + WT[i] ;
+     }
+     ATAT = TotalTAT/size ;
+     AWT = TotalWT/size ;
+     printf("Average Turn Around Time: %f\n",ATAT) ;
+     printf("Average Waiting Time: %f\n",AWT) ;
+ }
+int main() {
+    int AT[size] = {1, 2, 3};
+    int BT[size] = {2, 6, 3};
+
+    completion_time(AT, BT);
+    turn_around_time(AT);
+    waiting_time(BT);
+    average_time();
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
