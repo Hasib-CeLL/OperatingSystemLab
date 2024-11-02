@@ -1,0 +1,94 @@
+#include <stdio.h>
+#define size 5
+int CT[size];
+int TAT[size];
+int WT[size];
+int P[size] = {1, 2, 3, 4, 5};
+
+void insertion_Sort(int BT[])
+{
+    for (int i = 1; i < size; i++)
+     {
+        int keyBT = BT[i];
+        int keyP = P[i];
+        int j = i - 1;
+
+        while (j >= 0 && BT[j] > keyBT)
+         {
+            BT[j + 1] = BT[j];
+            P[j + 1] = P[j];
+            j = j - 1;
+         }
+          BT[j + 1] = keyBT;
+          P[j + 1] = keyP;
+     }
+}
+
+void completion_time(int BT[])
+{
+    int count = 0;
+    for (int i = 0; i < size; i++)
+     {
+        count += BT[i];
+        CT[i] = count;
+     }
+}
+
+void turn_around_time(int AT[])
+{
+    for (int i = 0; i < size; i++)
+     {
+        TAT[i] = CT[i] - AT[i];
+     }
+}
+
+void waiting_time(int BT[]) {
+    for (int i = 0; i < size; i++)
+     {
+        WT[i] = TAT[i] - BT[i];
+     }
+}
+
+void average_time()
+{
+    float totalTAT = 0, totalWT = 0;
+    float ATAT, AWT;
+
+    for (int i = 0; i < size; i++)
+     {
+        totalTAT = totalTAT + TAT[i];
+        totalWT = totalWT + WT[i];
+     }
+
+    ATAT = totalTAT / size;
+    AWT = totalWT / size;
+
+    printf("Average Turnaround Time : %f\n", ATAT);
+    printf("Average Waiting Time : %f\n", AWT);
+}
+
+int main()
+{
+    int BT[size];
+    int AT[size] = {0, 0, 0, 0, 0};
+    printf("Enter burst time for %d processes:\n", size);
+    for (int i = 0; i < size; i++)
+     {
+        printf("Burst time for process P%d: ", i + 1);
+        scanf("%d", &BT[i]);
+     }
+
+    insertion_Sort(BT);
+    completion_time(BT);
+    turn_around_time(AT);
+    waiting_time(BT);
+    printf("Process\tBT\tCT\tTAT\tWT\n");
+    for (int i = 0; i < size; i++)
+     {
+        printf("P%d\t%d\t%d\t%d\t%d\n", P[i], BT[i], CT[i], TAT[i], WT[i]);
+     }
+
+    average_time();
+
+    return 0;
+}
